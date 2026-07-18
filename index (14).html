@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hein Min VXz. Search Engine</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        body.incognito-active {
+            background-color: #080808;
+        }
+
+        /* 🌧️ Top Weather Info */
+        .weather-widget {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #9aa0a6;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #1e1e1e;
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid #3c4043;
+        }
+
+        body.incognito-active .weather-widget {
+            border-color: #ff6a00;
+            color: #ff6a00;
+        }
+
+        .search-container {
+            text-align: center;
+            width: 100%;
+            max-width: 580px;
+            margin-top: 12vh;
+            position: relative;
+            flex-grow: 1; /* Footer ကို အောက်ဆုံး တွန်းပို့ဖို့ */
+        }
+
+        .logo {
+            font-size: 58px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            background: linear-gradient(45deg, #4285F4, #a64bf4, #ff4b2b, #FBBC05);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: background 0.3s ease;
+        }
+
+        body.incognito-active .logo {
+            background: linear-gradient(45deg, #5f6368, #9aa0a6, #5f6368);
+            -webkit-background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #8ab4f8;
+            margin-bottom: 35px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: color 0.3s ease;
+        }
+
+        body.incognito-active .subtitle {
+            color: #ff6a00;
+        }
+
+        /* Search Box */
+        .custom-search-box {
+            position: relative;
+            background-color: #202124;
+            border: 1px solid #3c4043;
+            border-radius: 24px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            z-index: 10;
+            transition: border-color 0.3s ease;
+        }
+
+        .custom-search-box:focus-within {
+            background-color: #303134;
+            border-color: #5f6368;
+        }
+
+        body.incognito-active .custom-search-box {
+            border-color: #ff6a00;
+        }
+
+        .search-icon {
+            color: #9aa0a6;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 16px;
+            height: 100%;
+        }
+
+        /* 🟠 Orange Loading Line */
+        .orange-loading-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(90deg, transparent, #ff6a00, transparent);
+            background-size: 200% 100%;
+            display: none;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
+
+        .orange-loading-line.active {
+            display: block;
+            animation: moveLine 0.6s infinite linear;
+        }
+
+        @keyframes moveLine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Suggestions Dropdown */
+        .suggestions-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: #202124;
+            border: 1px solid #3c4043;
+            border-top: none;
+            border-bottom-left-radius: 14px;
+            border-bottom-right-radius: 14px;
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 999;
+            text-align: left;
+            display: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            margin-top: 2px;
+        }
+
+        .suggestion-item {
+            padding: 10px 16px;
+            cursor: pointer;
+            color: #e8eaed;
+            font-size: 15px;
+        }
+
+        .suggestion-item:hover {
+            background-color: #303134;
+            color: #ff6a00;
+        }
+
+        /* Speed Dial Links */
+        .quick-links-container {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .quick-link-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #bdc1c6;
+            font-size: 12px;
+            width: 70px;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .quick-link-item:hover {
+            transform: translateY(-4px);
+            color: #8ab4f8;
+        }
+
+        body.incognito-active .quick-link-item:hover {
+            color: #ff6a00;
+        }
+
+        .icon-circle {
+            width: 48px;
+            height: 48px;
+            background-color: #202124;
+            border: 1px solid #3c4043;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link-item:hover .icon-circle {
+            background-color: #303134;
+            border-color: #5f6368;
+        }
+
+        /* Buttons Layout */
+        .mode-container {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .action-btn {
+            background-color: #202124;
+            border: 1px solid #3c4043;
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: #9aa0a6;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            border-color: #5f6368;
+            color: white;
+        }
+
+        .incognito-btn.active {
+            border-color: #ff6a00;
+            color: #ff6a00;
+            box-shadow: 0 0 12px rgba(255, 106, 0, 0.3);
+            background-color: #281a10;
+        }
+
+        /* 🔞 Adult Section Feature */
+        .adult-btn.active {
+            border-color: #d93025;
+            color: #ff4b4b;
+            background-color: #2c1616;
+            box-shadow: 0 0 12px rgba(217, 48, 37, 0.3);
+        }
+
+        .adult-links-panel {
+            margin-top: 25px;
+            background-color: #1e1e1e;
+            border: 1px solid #3c4043;
+            border-radius: 12px;
+            padding: 15px;
+            display: none;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .adult-link {
+            background: #282828;
+            color: #e8eaed;
+            padding: 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 13px;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .adult-link:hover {
+            background: #333;
+            border-color: #ff4b4b;
+            color: #ff4b4b;
+        }
+
+        /* 🎯 Footer UI */
+        footer {
+            margin-top: 40px;
+            padding: 20px 0;
+            font-size: 13px;
+            color: #5f6368;
+            text-align: center;
+            width: 100%;
+            border-top: 1px solid #202124;
+        }
+
+        footer p:first-child {
+            font-weight: 500;
+            color: #8ab4f8;
+            margin-bottom: 4px;
+        }
+        
+        body.incognito-active footer p:first-child {
+            color: #ff6a00;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🌧️ Water / Weather Component -->
+    <div class="weather-widget">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+        <span>Yangon - Water / Rainy Atmosphere</span>
+    </div>
+
+    <div class="search-container">
+        <div class="logo">Hein Min VXz.</div>
+        <div id="modeSubtitle" class="subtitle">Powered by Google Search</div>
+        
+        <div class="custom-search-box">
+            <div class="search-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+                </svg>
+            </div>
+            <input type="text" id="customInput" class="search-input" placeholder="Google တွင် ရှာရန်..." autocomplete="off" autofocus>
+            <div id="loadingLine" class="orange-loading-line"></div>
+            
+            <div id="suggestions" class="suggestions-list"></div>
+        </div>
+
+        <!-- Speed Dial Links -->
+        <div class="quick-links-container">
+            <a href="https://www.facebook.com" target="_blank" class="quick-link-item">
+                <div class="icon-circle">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c4.56-.93 8-4.96 8-9.75z"/></svg>
+                </div>
+                <span>Facebook</span>
+            </a>
+            <a href="https://www.youtube.com" target="_blank" class="quick-link-item">
+                <div class="icon-circle">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </div>
+                <span>YouTube</span>
+            </a>
+            <a href="https://www.tiktok.com" target="_blank" class="quick-link-item">
+                <div class="icon-circle">
+                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.03 2.61-.01 3.91-.02.08 1.53.63 3.02 1.73 4.05.73.65 1.63 1.11 2.58 1.34v3.91a8.312 8.312 0 0 1-4.32-1.24v6.52A7.58 7.58 0 0 1 8.875 22.2a7.55 7.55 0 0 1-5.11-2.19 7.427 7.427 0 0 1-1.39-7.9 7.545 7.545 0 0 1 7.22-4.59c.35-.01.7.02 1.05.07V11.7c-.36-.14-.76-.2-1.15-.17a3.626 3.626 0 0 0-2.82 1.83 3.69 3.69 0 0 0 .59 4.39 3.613 3.613 0 0 0 3.75.76 3.622 3.622 0 0 0 2.16-3.23c.02-1.93.01-11.47.01-15.26z"/></svg>
+                </div>
+                <span>TikTok</span>
+            </a>
+            <a href="https://github.com" target="_blank" class="quick-link-item">
+                <div class="icon-circle">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                </div>
+                <span>GitHub</span>
+            </a>
+        </div>
+
+        <div class="mode-container">
+            <!-- Incognito Button -->
+            <button id="incognitoBtn" class="action-btn incognito-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10A10 10 0 0 0 12 2zm0 2c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                </svg>
+                <span>Incognito Mode</span>
+            </button>
+
+            <!-- 🔞 Adult Site Toggle Button -->
+            <button id="adultBtn" class="action-btn adult-btn">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                <span>Adult Sites</span>
+            </button>
+        </div>
+
+        <!-- 🔞 Hidden Adult Links Panel (10 Links) -->
+        <div id="adultPanel" class="adult-links-panel">
+            <a href="https://www.pornhub.com" target="_blank" class="adult-link">Pornhub</a>
+            <a href="https://www.xvideos.com" target="_blank" class="adult-link">XVideos</a>
+            <a href="https://www.xnxx.com" target="_blank" class="adult-link">XNXX</a>
+            <a href="https://www.xhamster.com" target="_blank" class="adult-link">xHamster</a>
+            <a href="https://www.stripchat.com" target="_blank" class="adult-link">Stripchat</a>
+            <a href="https://www.chaturbate.com" target="_blank" class="adult-link">Chaturbate</a>
+            <a href="https://www.youporn.com" target="_blank" class="adult-link">YouPorn</a>
+            <a href="https://www.redtube.com" target="_blank" class="adult-link">RedTube</a>
+            <a href="https://www.spankbang.com" target="_blank" class="adult-link">SpankBang</a>
+            <a href="https://www.eporner.com" target="_blank" class="adult-link">EPorner</a>
+        </div>
+    </div>
+
+    <!-- 🎯 Footer (တောင်းဆိုထားသည့်စာသားအတိုင်း) -->
+    <footer>
+        <p>Developed by Hein Min khant</p>
+        <p>©All rights reserved 2026</p>
+    </footer>
+
+    <script>
+        const customInput = document.getElementById('customInput');
+        const loadingLine = document.getElementById('loadingLine');
+        const suggestionsBox = document.getElementById('suggestions');
+        const incognitoBtn = document.getElementById('incognitoBtn');
+        const adultBtn = document.getElementById('adultBtn');
+        const adultPanel = document.getElementById('adultPanel');
+        const modeSubtitle = document.getElementById('modeSubtitle');
+
+        let isIncognito = false;
+
+        // Incognito Mode Functionality
+        incognitoBtn.addEventListener('click', () => {
+            isIncognito = !isIncognito;
+            if (isIncognito) {
+                incognitoBtn.classList.add('active');
+                document.body.classList.add('incognito-active');
+                modeSubtitle.textContent = "Incognito Mode Active";
+                customInput.placeholder = "Incognito ဖြင့် လုံခြုံစွာရှာရန်...";
+            } else {
+                incognitoBtn.classList.remove('active');
+                document.body.classList.remove('incognito-active');
+                modeSubtitle.textContent = "Powered by Google Search";
+                customInput.placeholder = "Google တွင် ရှာရန်...";
+            }
+        });
+
+        // Adult Panel Toggle
+        adultBtn.addEventListener('click', () => {
+            adultBtn.classList.toggle('active');
+            if (adultPanel.style.display === 'grid') {
+                adultPanel.style.display = 'none';
+            } else {
+                adultPanel.style.display = 'grid';
+            }
+        });
+
+        function redirectToGoogle(query) {
+            if (!query) return;
+            suggestionsBox.style.display = 'none';
+            loadingLine.classList.add('active');
+
+            setTimeout(() => {
+                if (isIncognito) {
+                    const incognitoUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}&pws=0`;
+                    window.location.replace(incognitoUrl);
+                } else {
+                    window.location.href = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                }
+            }, 600); 
+        }
+
+        customInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                redirectToGoogle(customInput.value.trim());
+            }
+        });
+
+        customInput.addEventListener('input', function() {
+            const query = customInput.value.trim();
+            if (query.length < 1) {
+                suggestionsBox.style.display = 'none';
+                return;
+            }
+
+            const script = document.createElement('script');
+            script.src = `https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(query)}&callback=handleSuggestions`;
+            document.body.appendChild(script);
+            document.body.removeChild(script);
+        });
+
+        window.handleSuggestions = function(data) {
+            const fetchedSuggestions = data[1];
+            suggestionsBox.innerHTML = '';
+
+            if (fetchedSuggestions.length > 0) {
+                suggestionsBox.style.display = 'block';
+                fetchedSuggestions.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'suggestion-item';
+                    div.textContent = item;
+                    div.addEventListener('click', () => {
+                        redirectToGoogle(item);
+                    });
+                    suggestionsBox.appendChild(div);
+                });
+            } else {
+                suggestionsBox.style.display = 'none';
+            }
+        };
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.custom-search-box')) {
+                suggestionsBox.style.display = 'none';
+            }
+        });
+    </script>
+
+</body>
+</html>
