@@ -1,127 +1,129 @@
-const photos = [
-  { src: "images/photo1.jpg", caption: "A little memory ♡" },
-  { src: "images/photo2.jpg", caption: "Just us ✨" },
-  { src: "images/photo3.jpg", caption: "My favorite feeling" },
-  { src: "images/photo4.jpg", caption: "A moment to keep ♡" },
-  { src: "images/photo5.jpg", caption: "Always a special one" }
-];
+// ============================
+// LOVE CARD - MAIN JAVASCRIPT
+// ============================
 
-const modal = document.getElementById("photoModal");
-const modalImage = document.getElementById("modalImage");
-const modalCaption = document.getElementById("modalCaption");
-const music = document.getElementById("loveMusic");
-const musicBtn = document.getElementById("musicBtn");
-const musicLabel = document.getElementById("musicLabel");
+// 1. PHOTO GALLERY / LIGHTBOX
 
-let currentPhoto = 0;
-let touchStartX = 0;
+const cards = document.querySelectorAll(".photo-card");
+const lightbox = document.getElementById("lightbox");
+const lightboxImage = document.getElementById("lightboxImage");
+const closeLightbox = document.getElementById("closeLightbox");
 
-function showPhoto(index) {
-  currentPhoto = (index + photos.length) % photos.length;
-  modalImage.src = photos[currentPhoto].src;
-  modalCaption.textContent = photos[currentPhoto].caption;
-}
+let previousFocus = null;
 
-function openPhoto(index) {
-  showPhoto(index);
-  modal.classList.add("show");
-  modal.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-}
+cards.forEach((card) => {
+  card.addEventListener("click", () => {
+    const img = card.querySelector("img");
 
-function closePhoto() {
-  modal.classList.remove("show");
-  modal.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
+    if (!img || !img.complete || img.naturalWidth === 0) {
+      alert("ဒီပုံကို ဖွင့်မရပါ။ Image file ကို စစ်ဆေးပါ။");
+      return;
+    }
 
-document.querySelectorAll("[data-photo]").forEach((button) => {
-  button.addEventListener("click", () => {
-    openPhoto(Number(button.dataset.photo));
+    previousFocus = card;
+    lightboxImage.src = img.src;
+    lightbox.classList.add("open");
+    document.body.style.overflow = "hidden";
+    closeLightbox.focus();
   });
 });
 
-document.getElementById("closeModal").addEventListener("click", closePhoto);
+function hideLightbox() {
+  lightbox.classList.remove("open");
+  document.body.style.overflow = "";
+  lightboxImage.src = "";
 
-document.getElementById("prevPhoto").addEventListener("click", () => {
-  showPhoto(currentPhoto - 1);
-});
-
-document.getElementById("nextPhoto").addEventListener("click", () => {
-  showPhoto(currentPhoto + 1);
-});
-
-modal.addEventListener("click", (event) => {
-  if (event.target === modal) closePhoto();
-});
-
-modal.addEventListener("touchstart", (event) => {
-  touchStartX = event.changedTouches[0].screenX;
-}, { passive: true });
-
-modal.addEventListener("touchend", (event) => {
-  const difference = event.changedTouches[0].screenX - touchStartX;
-  if (Math.abs(difference) > 55) {
-    showPhoto(currentPhoto + (difference < 0 ? 1 : -1));
+  if (previousFocus) {
+    previousFocus.focus();
   }
-}, { passive: true });
+}
+
+closeLightbox.addEventListener("click", hideLightbox);
+
+lightbox.addEventListener("click", (event) => {
+  if (event.target === lightbox) {
+    hideLightbox();
+  }
+});
 
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    closePhoto();
-    closeSurprise();
-  }
-
-  if (modal.classList.contains("show")) {
-    if (event.key === "ArrowRight") showPhoto(currentPhoto + 1);
-    if (event.key === "ArrowLeft") showPhoto(currentPhoto - 1);
+  if (event.key === "Escape" && lightbox.classList.contains("open")) {
+    hideLightbox();
   }
 });
 
-// Surprise popup
-const surprise = document.getElementById("surprise");
 
-function openSurprise() {
-  surprise.classList.add("show");
-  surprise.setAttribute("aria-hidden", "false");
-}
+// 2. LOCAL MUSIC PLAYER
 
-function closeSurprise() {
-  surprise.classList.remove("show");
-  surprise.setAttribute("aria-hidden", "true");
-}
+const music = document.getElementById("music");
+const musicButton = document.getElementById("musicButton");
+const musicLabel = document.getElementById("musicLabel");
+const musicFile = document.getElementById("musicFile");
 
-document.getElementById("openBtn").addEventListener("click", openSurprise);
-document.getElementById("closeSurprise").addEventListener("click", closeSurprise);
-document.getElementById("surpriseOk").addEventListener("click", closeSurprise);
+let selectedMusic = false;
+let musicURL = null;
 
-surprise.addEventListener("click", (event) => {
-  if (event.target === surprise) closeSurprise();
-});
+musicButton.addEventListener("click", async () => {
+  if (!selectedMusic) {
+    musicFile.click();
+    return;
+  }
 
-// Music controls
-musicBtn.addEventListener("click", async () => {
   if (music.paused) {
     try {
       await music.play();
-      musicLabel.textContent = "Pause Music";
     } catch (error) {
-      musicLabel.textContent = "Music unavailable";
-      alert(
-        "Music file မရှိသေးပါ။ music/young-and-beautiful.mp3 ကို ထည့်ပေးပါ။"
-      );
+      musicLabel.textContent = "TAP TO PLAY";
     }
   } else {
     music.pause();
-    musicLabel.textContent = "Play Music";
   }
 });
 
-music.addEventListener("ended", () => {
-  musicLabel.textContent = "Play Music";
+musicFile.addEventListener("change", async () => {
+  const file = musicFile.files[0];
+
+  if (!file) return;
+
+  if (!file.type.startsWith("audio/")) {
+    alert("Audio file တစ်ခုကို ရွေးပေးပါ။");
+    return;
+  }
+
+  if (musicURL) {
+    URL.revokeObjectURL(musicURL);
+  }
+
+  music.pause();
+
+  musicURL = URL.createObjectURL(file);
+  music.src = musicURL;
+  selectedMusic = true;
+  musicLabel.textContent = "PLAY MUSIC";
+
+  try {
+    await music.play();
+  } catch (error) {
+    musicLabel.textContent = "TAP TO PLAY";
+  }
 });
 
-// Floating hearts animation
+music.addEventListener("play", () => {
+  musicButton.classList.add("playing");
+  musicLabel.textContent = "NOW PLAYING";
+});
+
+music.addEventListener("pause", () => {
+  musicButton.classList.remove("playing");
+
+  if (selectedMusic) {
+    musicLabel.textContent = "PLAY MUSIC";
+  }
+});
+
+
+// 3. FLOATING HEART PARTICLES
+
 const canvas = document.getElementById("hearts");
 const ctx = canvas.getContext("2d");
 
@@ -130,60 +132,94 @@ let height = 0;
 let particles = [];
 
 function resizeCanvas() {
-  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
   width = window.innerWidth;
   height = window.innerHeight;
 
-  canvas.width = width * ratio;
-  canvas.height = height * ratio;
-  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  canvas.width = width * dpr;
+  canvas.height = height * dpr;
 
-  particles = Array.from({ length: width < 600 ? 14 : 25 }, () => ({
+  canvas.style.width = width + "px";
+  canvas.style.height = height + "px";
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const count = width < 600 ? 16 : 30;
+
+  particles = Array.from({ length: count }, () => ({
     x: Math.random() * width,
     y: Math.random() * height,
-    size: 5 + Math.random() * 9,
-    speed: 0.25 + Math.random() * 0.6,
-    drift: (Math.random() - 0.5) * 0.4,
-    opacity: 0.15 + Math.random() * 0.3
+    size: 5 + Math.random() * 10,
+    speed: 0.25 + Math.random() * 0.65,
+    drift: (Math.random() - 0.5) * 0.5,
+    alpha: 0.12 + Math.random() * 0.35,
+    phase: Math.random() * Math.PI * 2
   }));
 }
 
-function drawHeart(x, y, size, opacity) {
+function drawHeart(x, y, size, alpha) {
   ctx.save();
   ctx.translate(x, y);
   ctx.scale(size / 20, size / 20);
-  ctx.globalAlpha = opacity;
-  ctx.fillStyle = "#ff8fb8";
+  ctx.globalAlpha = alpha;
+
   ctx.beginPath();
   ctx.moveTo(0, 7);
-  ctx.bezierCurveTo(-16, -3, -9, -12, 0, -5);
-  ctx.bezierCurveTo(9, -12, 16, -3, 0, 7);
+  ctx.bezierCurveTo(-15, -3, -10, -13, 0, -5);
+  ctx.bezierCurveTo(10, -13, 15, -3, 0, 7);
+
+  ctx.fillStyle = "#ff78bd";
+  ctx.shadowColor = "#ff3eaa";
+  ctx.shadowBlur = 12;
   ctx.fill();
+
   ctx.restore();
 }
 
-function animateHearts() {
+let animationFrame;
+let lastFrame = 0;
+
+function animateHearts(timestamp) {
+  // Limit rendering to roughly 30 FPS to save battery.
+  if (timestamp - lastFrame < 33) {
+    animationFrame = requestAnimationFrame(animateHearts);
+    return;
+  }
+
+  lastFrame = timestamp;
+
   ctx.clearRect(0, 0, width, height);
 
-  particles.forEach((heart) => {
-    drawHeart(heart.x, heart.y, heart.size, heart.opacity);
+  particles.forEach((p) => {
+    p.y -= p.speed;
+    p.x += p.drift + Math.sin(timestamp * 0.0007 + p.phase) * 0.25;
 
-    heart.y -= heart.speed;
-    heart.x += heart.drift;
-
-    if (heart.y < -25) {
-      heart.y = height + 25;
-      heart.x = Math.random() * width;
+    if (p.y < -20) {
+      p.y = height + 20;
+      p.x = Math.random() * width;
     }
 
-    if (heart.x < -25) heart.x = width + 25;
-    if (heart.x > width + 25) heart.x = -25;
+    if (p.x < -20) p.x = width + 20;
+    if (p.x > width + 20) p.x = -20;
+
+    drawHeart(p.x, p.y, p.size, p.alpha);
   });
 
-  requestAnimationFrame(animateHearts);
+  animationFrame = requestAnimationFrame(animateHearts);
 }
 
-window.addEventListener("resize", resizeCanvas);
 resizeCanvas();
-animateHearts();
+
+window.addEventListener("resize", resizeCanvas);
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    cancelAnimationFrame(animationFrame);
+  } else {
+    lastFrame = 0;
+    animationFrame = requestAnimationFrame(animateHearts);
+  }
+});
+
+animationFrame = requestAnimationFrame(animateHearts);
