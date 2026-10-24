@@ -1,52 +1,205 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You ❤️ | A Senior Dev's Love Card</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#eff8ff">
+  <title>A Little Universe For You ♡</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Background Floating Elements -->
-    <div id="bg-particles"></div>
 
-    <div class="card">
-        <div class="card-inner">
-            
-            <!-- Photo Carousel Section -->
-            <div class="slider-wrapper">
-                <div class="slider-container">
-                    <img src="photo1.jpg" alt="Memory 1" class="card-img active">
-                    <img src="photo2.jpg" alt="Memory 2" class="card-img">
-                    <img src="photo3.jpg" alt="Memory 3" class="card-img">
-                    <img src="photo4.jpg" alt="Memory 4" class="card-img">
-                    <img src="photo5.jpg" alt="Memory 5" class="card-img">
-                </div>
-                <!-- Navigation Dots -->
-                <div class="slider-dots" id="sliderDots"></div>
-            </div>
+<header class="topbar">
+  <a class="brand" href="#">♡ LITTLE BLUE LOVE</a>
+  <a href="#letter" class="nav-link">A letter for you ↗</a>
+</header>
 
-            <!-- Text & Poetry Section -->
-            <div class="text-content">
-                <h1>My Dearest</h1>
-                <div class="poetry-container">
-                    <p id="poetry-text" class="poetry"></p>
-                    <span class="cursor">|</span>
-                </div>
-            </div>
-            
-            <!-- Interactive Action -->
-            <button id="loveBtn" class="love-button">
-                <span class="heart-icon">❤</span> Send Love
-            </button>
-        </div>
-        
-        <!-- Heart Burst Container -->
-        <div id="hearts-container"></div>
+<main>
+  <section class="hero">
+    <p class="eyebrow">✧ MADE WITH ALL MY HEART ✧</p>
+    <p class="tiny">For my favorite person, always</p>
+
+    <h1>
+      Shoon Lai war<br>
+      <em>you are my Love 💞</em>
+    </h1>
+
+    <p class="intro">
+      If my heart could choose a place to rest,<br>
+      it would always find its way to you.
+    </p>
+
+    <a href="#memories" class="primary-btn">
+      Open our little world <span>↓</span>
+    </a>
+
+    <div class="hero-poem">
+      <span class="quote">“</span>
+      <p>You are my quiet sky,<br>
+      ကိုယ့်ချစ်လေသူတစ်ယောက်အား
+
+ချစ်တယ် ဖွင့်ပြောဖို့
+
+မခက်ခဲပေမယ့်...
+
+မဖြစ်နိုင်ဘူး ငြင်းခံရရင်သာ
+
+လက်ခံနိုင်ဖို့က ခက်ခဲတာပါ .
+
+ဒါကြောင့် ...ဖွင့်မပြောပဲ
+ဆက်ချစ်နေဖို့ကိုပဲ
+ကျနော်  ဆုံးဖြတ်ခဲ့ရပါတယ် ။
+
+</p>
+      <small>— A little thought, just for you</small>
     </div>
 
-    <script src="script.js"></script>
+    <p class="scroll-hint">SCROLL SLOWLY ↓</p>
+  </section>
+
+  <section id="memories" class="section">
+    <div class="section-heading">
+      <p class="eyebrow">THE LITTLE THINGS</p>
+      <h2>My favorite <em>Shoon Lai War</em></h2>
+      <p>Every picture holds a moment. Every moment means more because it's you.</p>
+    </div>
+
+    <div class="gallery">
+      <button class="photo tall" data-photo="photo1.jpg">
+        <img src="photo1.jpg" alt="Our memory one">
+        <span>The way you make me smile ♡</span>
+      </button>
+
+      <button class="photo short" data-photo="photo2.jpg">
+        <img src="photo2.jpg" alt="Our memory two">
+        <span>A moment to keep ♡</span>
+      </button>
+
+      <button class="photo tall" data-photo="photo3.jpg">
+        <img src="photo3.jpg" alt="Our memory three">
+        <span>My kind of beautiful ♡</span>
+      </button>
+
+      <button class="photo short" data-photo="photo4.jpg">
+        <img src="photo4.jpg" alt="Our memory four">
+        <span>My little universe ♡</span>
+      </button>
+
+      <button class="photo tall" data-photo="photo5.jpg">
+        <img src="photo5.jpg" alt="Our memory five">
+        <span>And a thousand more ♡</span>
+      </button>
+    </div>
+
+    <p class="hint">Tap a photo to see it a little closer ✧</p>
+  </section>
+
+  <section id="letter" class="letter-section">
+    <article class="letter-card">
+      <p class="eyebrow">A LETTER FROM MY HEART</p>
+      <h2>Dear <em>you,</em></h2>
+
+      <p>မင်းပုံရိပ်ကို
+သူ့မျက်၀န်းတွေမှာ မတွေ့တဲ့အခါ
+ကိုယ့်မျက်၀န်းတွေကို ကြည့်ပါ ။
+
+</p>
+
+      <p>ချစ်ခြင်းမေတ္တာ ဆိုတာ
+ရုပ်ရည်/ဂုဏ်ပကာသနတွေ မဟုတ်ပဲ
+နွေးထွေးလုံခြုံမှု ရှိတဲ့ရပ်ဝန်းမှာသာ
+ရှာတွေ့နိုင်သော အရာ။</p>
+
+      <p>ချစ်ခြင်းမေတ္တာ ဆိုတာ
+မင်းဂရုမစိုက်တဲ့ ထောင့်ချိုးလေးမှာ
+ပွင့်နေတတ်တဲ့ ပန်းလေးတွေလည်းဖြစ်နေနိုင်တယ်
+မြင်အောင်ကြည့်ပါကွယ် ။ t.me/Jkok223
+
+</p>
+
+      <p>If love were a sky, I'd give you every shade of blue — calm for your worries, bright for your dreams, and endless for all the things I feel but can't always say.</p>
+
+      <div class="signature">
+        Always,
+        <strong>with love ♡</strong>
+      </div>
+    </article>
+  </section>
+
+  <section class="section poems">
+    <p class="eyebrow">A FEW WORDS, JUST FOR YOU</p>
+    <h2>When I think of <em>you…</em></h2>
+
+    <div class="poem-grid">
+      <article class="poem-card">
+        <small>01 / SKY</small>
+        <p>If I could paint the sky anew,<br>
+        I'd fill each shade with thoughts of you.</p>
+      </article>
+
+      <article class="poem-card">
+        <small>02 / HOME</small>
+        <p>Not every home has walls or doors;<br>
+        some feel like hands that hold yours.</p>
+      </article>
+
+      <article class="poem-card">
+        <small>03 / ALWAYS</small>
+        <p>And if the stars forget to shine,<br>
+        I'll still be glad your heart met mine.</p>
+      </article>
+    </div>
+
+    <button id="surpriseBtn" class="outline-btn">
+      One tiny surprise ♡
+    </button>
+
+    <p id="surpriseText" class="surprise-text" hidden>
+      Out of all the people in this world, you are still my favorite hello. 💙
+    </p>
+  </section>
+
+  <section class="music-section">
+    <div class="music-icon">♫</div>
+    <p class="eyebrow">A SOUNDTRACK FOR THIS MOMENT</p>
+    <h2>Press play, <em>take a breath.</em></h2>
+    <p>A little music for the words that are hard to say.</p>
+
+    <div class="music-player">
+      <iframe
+        title="SoundCloud music player"
+        width="100%"
+        height="166"
+        scrolling="no"
+        frameborder="0"
+        allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/lanadelreyofficial&color=%2387bde9&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=true">
+      </iframe>
+    </div>
+
+    <small class="music-note">
+      Replace the player URL with your chosen song's official SoundCloud Embed link.
+    </small>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-heart">♡</div>
+  <p>Made from a little love and a lot of feeling.</p>
+  <small>YOU + ME + A SKY FULL OF BLUE</small>
+</footer>
+
+<div id="lightbox" class="lightbox">
+  <button id="closeLightbox" aria-label="Close photo">×</button>
+  <img id="largePhoto" alt="Expanded memory">
+</div>
+
+<script src="script.js"></script>
 </body>
-</html>
+          </html>
+          
