@@ -1,119 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#100b1b">
-  <title>For You ❤️</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️ | A Senior Dev's Love Card</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="glow glow-one"></div>
-  <div class="glow glow-two"></div>
+    <!-- Background Floating Elements -->
+    <div id="bg-particles"></div>
 
-  <canvas id="hearts"></canvas>
+    <div class="card">
+        <div class="card-inner">
+            
+            <!-- Photo Carousel Section -->
+            <div class="slider-wrapper">
+                <div class="slider-container">
+                    <img src="photo1.jpg" alt="Memory 1" class="card-img active">
+                    <img src="photo2.jpg" alt="Memory 2" class="card-img">
+                    <img src="photo3.jpg" alt="Memory 3" class="card-img">
+                    <img src="photo4.jpg" alt="Memory 4" class="card-img">
+                    <img src="photo5.jpg" alt="Memory 5" class="card-img">
+                </div>
+                <!-- Navigation Dots -->
+                <div class="slider-dots" id="sliderDots"></div>
+            </div>
 
-  <header class="topbar">
-    <a class="brand" href="#">♡ <span>for you</span></a>
-    <button id="musicBtn" class="music-btn" type="button">
-      ♫ <span id="musicLabel">Play Music</span>
-    </button>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div class="eyebrow"><span></span> A LITTLE SOMETHING FOR YOU</div>
-      <h1>You make my<br><span>world beautiful.</span></h1>
-      <p class="subtitle">
-        Some people make ordinary moments feel like magic.
-        You're one of them. ❤️
-      </p>
-
-      <button id="openBtn" class="primary-btn" type="button">
-        Open your little surprise <span>♡</span>
-      </button>
-
-      <div class="scroll-note">SCROLL TO SEE OUR MEMORIES ↓</div>
-    </section>
-
-    <section class="memories" id="memories">
-      <div class="section-heading">
-        <span class="eyebrow">A FEW LITTLE MOMENTS</span>
-        <h2>Our little <span>gallery</span></h2>
-        <p>Every picture holds a little piece of a feeling.</p>
-      </div>
-
-      <div class="gallery">
-        <button class="photo photo-one" data-photo="0" type="button"
-          aria-label="Open photo 1">
-          <img src="photo1.jpg" alt="Our memory 1">
-          <span class="photo-caption">A little memory ♡</span>
-        </button>
-        <button class="photo photo-two" data-photo="1" type="button"
-          aria-label="Open photo 2">
-          <img src="photo2.jpg" alt="Our memory 2">
-          <span class="photo-caption">Just us ✨</span>
-        </button>
-        <button class="photo photo-three" data-photo="2" type="button"
-          aria-label="Open photo 3">
-          <img src="photo3.jpg" alt="Our memory 3">
-          <span class="photo-caption">My favorite feeling</span>
-        </button>
-        <button class="photo photo-four" data-photo="3" type="button"
-          aria-label="Open photo 4">
-          <img src="photo4.jpg" alt="Our memory 4">
-          <span class="photo-caption">A moment to keep ♡</span>
-        </button>
-        <button class="photo photo-five" data-photo="4" type="button"
-          aria-label="Open photo 5">
-          <img src="photo5.jpg" alt="Our memory 5">
-          <span class="photo-caption">Always a special one</span>
-        </button>
-      </div>
-    </section>
-
-    <section class="letter" id="letter">
-      <div class="letter-icon">♡</div>
-      <span class="eyebrow">A NOTE FROM MY HEART</span>
-      <h2>For someone <span>special.</span></h2>
-      <p id="letterText">
-        If I could keep one feeling forever, it would be the happiness
-        I feel when I think of you. No matter how ordinary a day is,
-        you make it a little more beautiful. This little page is just
-        a small way of saying that you matter to me. ❤️
-      </p>
-      <div class="signature">Made with love <span>♥</span></div>
-    </section>
-
-    <footer>Made with ♡, just for you.</footer>
-  </main>
-
-  <div class="modal" id="photoModal" aria-hidden="true">
-    <button class="modal-close" id="closeModal" aria-label="Close">×</button>
-    <button class="modal-arrow prev" id="prevPhoto" aria-label="Previous">‹</button>
-    <img id="modalImage" src="" alt="Expanded memory">
-    <button class="modal-arrow next" id="nextPhoto" aria-label="Next">›</button>
-    <p id="modalCaption"></p>
-  </div>
-
-  <div class="surprise" id="surprise" aria-hidden="true">
-    <div class="surprise-card">
-      <button id="closeSurprise" class="surprise-close" aria-label="Close">×</button>
-      <div class="big-heart">♥</div>
-      <span class="eyebrow">JUST FOR YOU</span>
-      <h2>You are <span>special.</span></h2>
-      <p>Out of all the little things in this world, I'm glad this page
-      brought a smile to your face. ❤️</p>
-      <button id="surpriseOk" class="primary-btn" type="button">Aww ♡</button>
+            <!-- Text & Poetry Section -->
+            <div class="text-content">
+                <h1>My Dearest</h1>
+                <div class="poetry-container">
+                    <p id="poetry-text" class="poetry"></p>
+                    <span class="cursor">|</span>
+                </div>
+            </div>
+            
+            <!-- Interactive Action -->
+            <button id="loveBtn" class="love-button">
+                <span class="heart-icon">❤</span> Send Love
+            </button>
+        </div>
+        
+        <!-- Heart Burst Container -->
+        <div id="hearts-container"></div>
     </div>
-  </div>
 
-  <!-- Add a legally obtained MP3 at music/young-and-beautiful.mp3
-       to use the local audio player. -->
-  <audio id="loveMusic" loop preload="none">
-    <source src="music/young-and-beautiful.mp3" type="audio/mpeg">
-  </audio>
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
-        </html>
+</html>
