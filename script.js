@@ -1,5 +1,5 @@
 /* ===== သီချင်း လမ်းကြောင်း ဒီမှာ ထည့်ပါ ===== */
-const SONG_URL = "Multo.m4a"; // ဥပမာ: "song.mp3" သို့မဟုတ် "https://.../song.mp3"
+const SONG_URL = "2f9bcd6826260d99b9dbddf3e363bbaf.mp4"; // ဥပမာ: "song.mp3" သို့မဟုတ် "https://.../song.mp3"
 
 /* ===== ပုံလမ်းကြောင်းများ ===== */
 const PHOTOS = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"];
