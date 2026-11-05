@@ -1,224 +1,108 @@
 <!DOCTYPE html>
 <html lang="my">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#eff8ff">
-  <title>အရမ်းချစ်ရသောမမရေ ♡</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>My Love Htet Htet Wai 💙💗💜</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Noto+Sans+Myanmar:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="lock">
 
-<header class="topbar">
-  <a class="brand" href="#">♡ LITTLE BLUE LOVE အချစ်များစွာဖြင့်ဖန်တီးသည်</a>
-  <div class="nav-group">
-    <a href="#letter" class="nav-link">A letter for you ↗</a>
-    <a href="https://www.tiktok.com/@zarni64630" 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       class="nav-link tiktok-nav"> ကိုယ့်စိလာဖို့နှိပ်ပါ ↗</a>
-  </div>
-</header>
+<!-- Gate -->
+<div id="gate">
+  <button id="open" aria-label="ဖွင့်ရန်">💖</button>
+  <p>Htet Htet Wai အတွက်<br><span class="glow">နှလုံးသားကို ထိပြီး ဖွင့်ကြည့်ပါ အချစ် website ကိုဖြည်းဖြည်းချင်းဆွဲပီးကြည့်နော်..🥹</span></p>
+</div>
+
 <main>
-  <!-- HERO -->
-  <section class="hero">
-    <p class="eyebrow">✧ MADE WITH ALL MY HEART ✧</p>
-    <p class="tiny">For my favorite person, always</p>
-
-    <h1>
-      အရမ်းချစ်ရသော<br>
-      <em>မမရေ 💞</em>
-    </h1>
-
-    <p class="intro">
-      If my heart could choose a place to rest,<br>
-      it would always find its way to you.
-    </p>
-
-    <a href="#memories" class="primary-btn">
-      ကျွန်တော်တို့ရဲ့ကမ္ဘာငယ်လေးကိုဖွင့်လိုက်ပါ<span>↓</span>
-    </a>
-
-    <div class="hero-poem">
-      <span class="quote">“</span>
-      <p>You are my quiet sky,<br>
-      and every star I wish upon.</p>
-      <small>— A little thought, just for you</small>
-    </div>
-
-    <p class="scroll-hint">ညင်သာစွာ scrool လုပ်ပါ↓</p>
+  <!-- Hero -->
+  <section class="sec" id="hero">
+    <p class="sub rv">အချစ်အတွက် ရေးထားတဲ့ Website 💙</p>
+    <h1 class="name" id="nm" aria-label="Htet Htet Wai"></h1>
+    <p class="sub rv">ငါ့ရဲ့ ကမ္ဘာမှာ မင်းဟာ အလှဆုံး ကြယ်လေးပါ</p>
+    <p class="hint">⌄</p>
   </section>
 
-  <!-- MUSIC -->
-  <section class="music-section">
-    <div class="music-icon">♫</div>
-    <p class="eyebrow">A SOUNDTRACK FOR THIS MOMENT</p>
-    <h2>Press play, <em>take a breath.</em></h2>
-    <p>A little music for the words that are hard to say.</p>
-
-    <div class="music-row">
-      <button id="playBtn" class="play-btn" aria-label="Play song">
-        <span class="play-icon">▶</span>
-        <span class="play-pulse"></span>
-      </button>
-      <p class="music-hint">ကျေးဇူးပြု၍နှိပ်ပေးပါခင်ဗျာ</p>
-    </div>
-
-    <!-- သီချင်း src ကို ဒီမှာ ပြင်ပါ -->
-    <audio id="mySong" src="ct.mp3" preload="none"></audio>
+  <!-- သီချင်း Section -->
+  <section class="sec" id="music-sec">
+    <h2 class="rv">သီချင်းလေး တစ်ပုဒ်</h2>
+    <p class="rv sub">အရင်ဦးဆုံး နှိပ်ပါ 🎧</p>
+    <button id="music" class="music-btn rv" aria-label="သီချင်း ဖွင့်/ပိတ်">
+      <span class="wave w1"></span>
+      <span class="wave w2"></span>
+      <span class="wave w3"></span>
+      <svg class="note" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M9 18V5l12-2v13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="6" cy="18" r="3" fill="currentColor"/>
+        <circle cx="18" cy="16" r="3" fill="currentColor"/>
+      </svg>
+    </button>
+    <p class="rv music-hint" id="music-hint">သီချင်းဖွင့်ရန် နှိပ်ပါ</p>
+    <audio id="song" loop preload="none"></audio>
   </section>
 
-  <!-- GALLERY -->
-  <section id="memories" class="section">
-    <div class="section-heading">
-      <p class="eyebrow">THE LITTLE THINGS</p>
-      <h2>My favorite <em>memories</em></h2>
-      <p>Every picture holds a moment. Every moment means more because it's you.</p>
-    </div>
-
-    <div class="gallery">
-      <button class="photo tall" data-dir="left" data-photo="photo1.jpg">
-        <img src="photo1.jpg" alt="Memory one">
-        <span>The way you make me smile ♡</span>
-      </button>
-      <button class="photo short" data-dir="right" data-photo="photo2.jpg">
-        <img src="photo2.jpg" alt="Memory two">
-        <span>A moment to keep ♡</span>
-      </button>
-      <button class="photo tall" data-dir="left" data-photo="photo3.jpg">
-        <img src="photo3.jpg" alt="Memory three">
-        <span>My kind of beautiful ♡</span>
-      </button>
-      <button class="photo short" data-dir="right" data-photo="photo4.jpg">
-        <img src="photo4.jpg" alt="Memory four">
-        <span>My little universe ♡</span>
-      </button>
-      <button class="photo tall" data-dir="left" data-photo="photo5.jpg">
-        <img src="photo5.jpg" alt="Memory five">
-        <span>And a thousand more ♡</span>
-      </button>
-    </div>
-
-    <p class="hint">Tap a photo to see it a little closer ✧</p>
+  <!-- Gallery -->
+  <section class="sec">
+    <h2 class="rgal"> အမှတ်တရများ</h2>
+    <div class="gal" id="gal"></div>
   </section>
 
-  <!-- LETTER -->
-  <section id="letter" class="letter-section">
-    <article class="letter-card">
-      <p class="eyebrow">A LETTER FROM MY HEART</p>
-      <h2>Dear <em>မမရေ,</em></h2>
-      <p>ဒီစာလေးက မမအတွက်ပါ။ ဖတ်ကြည့်ပေးပါဦး။</p>
-      <p>မမကို ချစ်တဲ့အကြောင်း စကားလုံးတွေနဲ့ ဖော်ပြဖို့ ခက်ပေမယ့် တစ်နေ့တစ်နေ့ ပိုချစ်လာတယ်။</p>
-      <div class="signature">
-        Always,
-        <strong>with love ♡</strong>
-      </div>
-    </article>
+  <!-- Reasons -->
+  <section class="sec">
+    <h2 class="rv">မင်းကို ချစ်ရတဲ့ အကြောင်းရင်းများ</h2>
+    <p class="rv sub">နှိပ်ကြည့်ပါ</p>
+    <div class="cards" id="cards"></div>
   </section>
 
-  <!-- 5 DECORATED TEXT BOXES -->
-  <section class="section boxes-section">
-    <div class="section-heading">
-      <p class="eyebrow">A FEW WORDS, JUST FOR YOU</p>
-      <h2>Things I want <em>you to know…</em></h2>
+  <!-- Counter -->
+  <section class="sec">
+    <h2 class="rv">ငါတို့ အတူရှိနေတာ</h2>
+    <label class="pick rv">ချစ်သူဖြစ်တဲ့နေ့ ရွေးပါ
+      <input type="date" id="since">
+    </label>
+    <div class="cnt rv">
+      <div><b id="d">0</b><small>ရက်</small></div>
+      <div><b id="h">0</b><small>နာရီ</small></div>
+      <div><b id="m">0</b><small>မိနစ်</small></div>
+      <div><b id="s">0</b><small>စက္ကန့်</small></div>
     </div>
+  </section>
 
-    <div class="box-grid">
-      <div class="text-box box-1">
-        <span class="box-number">💗</span>
-        <h3>I LOVE YOU </h3>
-        <p>မင်းရဲ့ဆံနွယ်လေးတွေပေါ်မှာ
-ကိုယ်ပြေးလွှားချင်မိတယ် "မမရယ်"
-အတောမသတ်နိုင်လှတဲ့
-ကိုယ့်အတွေးလွင်ပြင်မှာ
-မင်းဟာ ကိုယ့်ရီမောခြင်းတွေကို
-အထောက်ကူပြုနိုင်တဲ့
-တောင်တန်းလှလှလေးပါပဲ။</p>
-      </div>
-
-      <div class="text-box box-2">
-        <span class="box-number">💞</span>
-        <h3>My Love</h3>
-        <p>ကိုယ့်ဘဝနဲ့
-ကိုယ်ဆိုပေမယ့်လည်း
-ရုတ်တရက် လေစိမ်းတွေ
-တိုက်လာခဲ့ရင်
-မင်းရှိမယ့်အရပ်ကိုဘဲ
-မျက်နှာမူမိတုန်း။
-</p>
-      </div>
-
-      <div class="text-box box-3">
-        <span class="box-number">💞</span>
-        <h3>My favorite person</h3>
-        <p>ပျော်နေစေချင်တာ စေတနာဖြစ်ပြီး
-မင်းပျော်တာကိုပဲ မြင်ချင်နေတာက
-ချစ်ခြင်းမေတ္တာဖြစ်ပါတယ်
-မနေ့က ချစ်ခဲ့တယ်
-ဒီနေ့ ချစ်တယ်
-မနက်ဖြန်တွေမှာ ဆက်ချစ်နေဦးမယ်
-ဒီလောက်ပါပဲ ။</p>
-      </div>
-
-      <div class="text-box box-4">
-        <span class="box-number">💞</span>
-        <h3>Forever love</h3>
-        <p>ကိုအချစ်က
-ပိုးဖလံတစ်ကောင်လိုပါပဲ
-မီးရောင်အောက်မာကပ်တွယ်ရင်
-နောက်ဆုံးအတောင်ပံစွန်သွားထိတိုင်အောင်!
-မီးရောင်နားမာပဲတဝဲဝဲလည်ပေါ့🤕</p>
-      </div>
-
-      <div class="text-box box-5">
-        <span class="box-number">🌞</span>
-        <h3>Love you </h3>
-        <p>ကိုယ့်အသက်တောင် ကိုယ်မပိုင်ဘဲ
-သူစိမ်းတစ်ယောက်ကို ပိုင်ချင်တာကလဲ 
-စိတ္တဇရောဂါပဲ။
-</p>
-      </div>
+  <!-- Letter -->
+  <section class="sec">
+    <h2 class="rv">ဇမအတွက်...</h2>
+    <div class="paper rv" id="paper">
+      <p id="txt" class="caret"></p>
+      <em>— မင်းကို အရမ်းချစ်တဲ့ Kyaw Zay Ya</em>
     </div>
+  </section>
+
+  <!-- Finale -->
+  <section class="sec" id="fin">
+    <h2 class="rv">ကိုယ့်ဘေးမှာ တသက်လုံး ရှိပေးမလား?</h2>
+    <div class="btns rv">
+      <button class="btn" id="yes">ရှိမယ် 💖</button>
+      <button class="btn" id="no">စဉ်းစားဦးမယ်</button>
+    </div>
+    <p id="win" class="name">ချစ်တယ် Htet Htet Wai</p>
   </section>
 </main>
 
-<footer class="footer">
-  <div class="footer-heart">♡</div>
-  <p>Made from a little love and a lot of feeling.</p>
-  <small>YOU + ME + A SKY FULL OF BLUE</small>
-
-  <!-- Connect to Developer -->
-  <div class="developer-connect">
-    <p class="connect-text">Connect to Developer</p>
-    <a href="https://t.me/Kojarr446" 
-       target="_blank" 
-       rel="noopener noreferrer" 
-       class="telegram-btn"
-       aria-label="Contact developer on Telegram">
-      <svg class="telegram-icon" viewBox="0 0 240 240" width="22" height="22">
-        <defs>
-          <linearGradient id="tgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#2AABEE"/>
-            <stop offset="100%" stop-color="#229ED9"/>
-          </linearGradient>
-        </defs>
-        <circle cx="120" cy="120" r="120" fill="url(#tgGrad)"/>
-        <path fill="#ffffff" d="M54.3 118.8l143.2-55.2c6.6-2.4 12.4.6 10.2 11.4l-24.4 115c-1.8 8.4-6.9 10.5-14 6.6l-38.6-28.5-18.6 17.9c-2 2-3.7 3.7-7.6 3.7l2.7-39.4 71.7-64.8c3.1-2.8-.7-4.3-4.8-1.5l-88.6 55.8-38.1-11.9c-8.3-2.6-8.5-8.3 1.5-12.1z"/>
-      </svg>
-      <span>@kojarr443</span>
-    </a>
-  </div>
+<!-- Footer -->
+<footer>
+  <p class="fl">My Love <span>Htet Htet Wai</span> 💙💗💜</p>
+  <p class="fl">Developed by <span>Kyaw Zay Ya</span></p>
+  <a class="tg fl" href="https://t.me/kyawzayya" target="_blank" rel="noopener" aria-label="Telegram">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+      <path fill="currentColor" d="M9.02 13.84 9.9 18.9c.12.68 1.02.84 1.4.26l2.3-3.4-4.58-1.92Z"/>
+      <path fill="currentColor" d="M21.94 4.6c.2-.9-.66-1.65-1.52-1.32L2.7 10.02c-1.02.4-1 1.86.03 2.22l4.6 1.6 1.74 5.5c.24.75 1.18.98 1.74.42l2.55-2.53 4.6 3.4c.7.5 1.7.13 1.9-.72L21.94 4.6ZM9.02 13.84l11.2-7.34c.3-.2.66.14.44.44l-9.28 8.6-.16 3.48-1.2-5.18Z"/>
+    </svg>
+    <span>ကိုကို့စိလာချင်ရင်နှိပ်</span>
+  </a>
 </footer>
-
-<div id="lightbox" class="lightbox">
-  <button id="closeLightbox" aria-label="Close photo">×</button>
-  <img id="largePhoto" alt="Expanded memory">
-</div>
 
 <script src="script.js"></script>
 </body>
-        </html>
+</html>
